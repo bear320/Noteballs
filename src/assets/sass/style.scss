@@ -34,3 +34,9 @@ a,
     padding: 0 2rem;
   }
 } */
+
+#app {
+    [v-cloak] {
+        display: none;
+    }
+}

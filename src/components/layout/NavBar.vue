@@ -2,7 +2,7 @@
     <nav class="navbar is-warning" role="navigation" aria-label="main navigation">
         <div class="container is-max-desktop px-2">
             <div class="navbar-brand">
-                <div class="navbar-item is-size-4 brand">隨手記</div>
+                <router-link class="navbar-item is-size-4 brand" to="/">隨手記</router-link>
 
                 <a
                     :class="{ 'is-active': showBurger }"

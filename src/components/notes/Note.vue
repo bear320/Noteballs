@@ -1,16 +1,18 @@
 <template>
     <div class="card mb-4">
         <div class="card-content">
-            <div class="content">
+            <div v-cloak class="content">
                 {{ note.content }}
                 <div class="has-text-right has-text-grey-light mt-2">
-                    <small>{{ characterLength }}</small>
+                    <small v-cloak>{{ characterLength }}</small>
                 </div>
             </div>
         </div>
         <footer class="card-footer">
-            <a class="card-footer-item" href="#">編輯</a>
-            <a @click.prevent="storeNotes.deleteNote(note.id)" class="card-footer-item" href="#">刪除</a>
+            <router-link :to="`/editNote/${note.id}`" class="card-footer-item has-text-grey-dark">編輯</router-link>
+            <a @click.prevent="storeNotes.deleteNote(note.id)" class="card-footer-item has-text-grey-dark" href="#"
+                >刪除</a
+            >
         </footer>
     </div>
 </template>
