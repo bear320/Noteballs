@@ -21,8 +21,12 @@
 
             <div :class="{ 'is-active': showBurger }" id="navbarBasicExample" class="navbar-menu">
                 <div class="navbar-end">
-                    <router-link class="navbar-item" active-class="is-active" to="/">隨手記</router-link>
-                    <router-link class="navbar-item" active-class="is-active" to="/stats">統計數據</router-link>
+                    <router-link @click="showBurger = false" class="navbar-item" active-class="is-active" to="/"
+                        >隨手記</router-link
+                    >
+                    <router-link @click="showBurger = false" class="navbar-item" active-class="is-active" to="/stats"
+                        >統計數據</router-link
+                    >
                 </div>
             </div>
         </div>

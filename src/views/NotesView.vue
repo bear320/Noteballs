@@ -2,7 +2,7 @@
     <div class="notes">
         <AddEditNote v-model="newNote" label="新增筆記" placeholder="請輸入筆記內容..." ref="addEditNoteRef">
             <template #buttons>
-                <button :disabled="!newNote" @click="addNote" class="button is-link is-warning">新增</button>
+                <button :disabled="!newNote" @click="handleAddNote" class="button is-link is-warning">新增</button>
             </template>
         </AddEditNote>
 
@@ -24,7 +24,7 @@ const storeNotes = useStoreNotes();
 const newNote = ref("");
 const addEditNoteRef = ref(null);
 
-const addNote = () => {
+const handleAddNote = () => {
     storeNotes.addNote(newNote.value);
     newNote.value = "";
     addEditNoteRef.value.focusTextarea();
