@@ -19,13 +19,30 @@
                 </tr>
             </tbody>
         </table>
+
+        <input
+            v-model="comments"
+            v-autofocus
+            class="input"
+            maxlength="50"
+            placeholder="您喜歡「隨手記」嗎？"
+            type="text"
+        />
     </div>
 </template>
 
 <script setup>
 // imports
+import { ref } from "vue";
 import { useStoreNotes } from "../stores/storeNotes";
+import { vAutofocus } from "../directives/vAutofocus";
+import { useWatchCharacters } from "../use/useWatchCharacters";
 
 // store
 const storeNotes = useStoreNotes();
+
+// comments
+const comments = ref("");
+
+useWatchCharacters(comments, 50);
 </script>

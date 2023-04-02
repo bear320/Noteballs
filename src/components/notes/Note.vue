@@ -10,17 +10,18 @@
         </div>
         <footer class="card-footer">
             <router-link :to="`/editNote/${note.id}`" class="card-footer-item has-text-grey-dark">編輯</router-link>
-            <a @click.prevent="storeNotes.deleteNote(note.id)" class="card-footer-item has-text-grey-dark" href="#"
-                >刪除</a
-            >
+            <a @click.prevent="modals.deleteNote = true" class="card-footer-item has-text-grey-dark" href="#">刪除</a>
         </footer>
+
+        <ModalDeleteNote v-if="modals.deleteNote" v-model="modals.deleteNote" :noteId="note.id" />
     </div>
 </template>
 
 <script setup>
 // imports
-import { computed } from "vue";
+import { reactive, computed } from "vue";
 import { useStoreNotes } from "@/stores/storeNotes.js";
+import ModalDeleteNote from "@/components/notes/ModalDeleteNote.vue";
 
 // store
 const storeNotes = useStoreNotes();
@@ -38,5 +39,10 @@ const characterLength = computed(() => {
     const length = props.note.content.length;
     const desc = length > 1 ? "characters" : "character";
     return `${length} 字元 (${desc})`;
+});
+
+// modals
+const modals = reactive({
+    deleteNote: false,
 });
 </script>
