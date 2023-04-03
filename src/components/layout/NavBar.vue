@@ -29,11 +29,12 @@
                         >統計數據</router-link
                     >
                     <button
+                        v-if="storeAuth.user.id"
                         :class="{ 'ml-2': showBurger }"
-                        @click="storeAuth.logoutUser"
+                        @click="logout"
                         class="button is-small has-background-warning-dark has-text-white px-3"
                     >
-                        登出
+                        登出 {{ storeAuth.user.email }}
                     </button>
                 </div>
             </div>
@@ -64,6 +65,12 @@ onClickOutside(
     },
     { ignore: [navbarBurgerRef] }
 );
+
+// logout
+const logout = () => {
+    showBurger.value = false;
+    storeAuth.logoutUser();
+};
 </script>
 
 <style lang="scss">
