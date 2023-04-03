@@ -21,13 +21,20 @@
             </div>
 
             <div :class="{ 'is-active': showBurger }" id="navbarBasicExample" class="navbar-menu" ref="navbarMenuRef">
-                <div class="navbar-end">
+                <div class="navbar-end navbar-links">
                     <router-link @click="showBurger = false" class="navbar-item" active-class="is-active" to="/"
                         >隨手記</router-link
                     >
                     <router-link @click="showBurger = false" class="navbar-item" active-class="is-active" to="/stats"
                         >統計數據</router-link
                     >
+                    <button
+                        :class="{ 'ml-2': showBurger }"
+                        @click="storeAuth.logoutUser"
+                        class="button is-small has-background-warning-dark has-text-white px-3"
+                    >
+                        登出
+                    </button>
                 </div>
             </div>
         </div>
@@ -37,7 +44,11 @@
 <script setup>
 // imports
 import { ref } from "vue";
+import { useStoreAuth } from "@/stores/storeAuth";
 import { onClickOutside } from "@vueuse/core";
+
+// store
+const storeAuth = useStoreAuth();
 
 // mobile nav
 const showBurger = ref(false);
@@ -56,6 +67,15 @@ onClickOutside(
 </script>
 
 <style lang="scss">
+.navbar-links {
+    align-items: center !important;
+
+    button {
+        line-height: 100%;
+        border-color: hsl(48, 100%, 29%);
+    }
+}
+
 @media (max-width: 1023px) {
     .navbar-item.brand {
         padding: 0;

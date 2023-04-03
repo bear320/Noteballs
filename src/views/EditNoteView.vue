@@ -2,7 +2,7 @@
     <div class="edit-note">
         <AddEditNote v-model="noteContent" bgColor="info" label="編輯內容" placeholder="編輯筆記" ref="addEditNoteRef">
             <template #buttons>
-                <button class="button is-link is-light has-text-info mr-3" @click="$router.push('/')">取消</button>
+                <button class="button is-link is-light has-text-info mr-3" @click="$router.back()">取消</button>
                 <button class="button is-link is-info" :disabled="!noteContent" @click="handleUpdateNote">
                     儲存修改
                 </button>

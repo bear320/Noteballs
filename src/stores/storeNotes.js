@@ -1,18 +1,15 @@
 import { defineStore } from "pinia";
+import { collection, onSnapshot, doc, addDoc, deleteDoc, updateDoc, query, orderBy } from "firebase/firestore";
+import { db } from "@/js/firebase";
+
+const notesCollectionRef = collection(db, "notes");
+const notesCollectionQuery = query(notesCollectionRef, orderBy("date", "desc"));
 
 export const useStoreNotes = defineStore("storeNotes", {
     state: () => {
         return {
-            notes: [
-                {
-                    id: "id1",
-                    content: "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Rem, illum!",
-                },
-                {
-                    id: "id2",
-                    content: "This is a shorter note!",
-                },
-            ],
+            notes: [],
+            notesLoaded: false,
         };
     },
     getters: {
@@ -33,22 +30,37 @@ export const useStoreNotes = defineStore("storeNotes", {
         },
     },
     actions: {
-        addNote(newNoteContent) {
-            const noteId = new Date().getTime().toString();
-
-            const note = {
-                id: noteId,
-                content: newNoteContent,
-            };
-
-            this.notes.unshift(note);
+        async getNotes() {
+            this.notesLoaded = false;
+            onSnapshot(notesCollectionQuery, (querySnapshot) => {
+                let notes = [];
+                querySnapshot.forEach((doc) => {
+                    let note = {
+                        id: doc.id,
+                        content: doc.data().content,
+                        date: doc.data().date,
+                    };
+                    notes.push(note);
+                });
+                this.notes = notes;
+                this.notesLoaded = true;
+            });
         },
-        deleteNote(id) {
-            this.notes = this.notes.filter((note) => note.id !== id);
+        async addNote(content) {
+            const date = new Date().getTime().toString();
+
+            await addDoc(notesCollectionRef, {
+                content,
+                date,
+            });
         },
-        updateNote(id, content) {
-            let index = this.notes.findIndex((note) => note.id === id);
-            this.notes[index].content = content;
+        async deleteNote(id) {
+            await deleteDoc(doc(notesCollectionRef, id));
+        },
+        async updateNote(id, content) {
+            await updateDoc(doc(notesCollectionRef, id), {
+                content,
+            });
         },
     },
 });
